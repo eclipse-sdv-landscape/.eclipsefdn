@@ -1,5 +1,29 @@
 local orgs = import 'vendor/otterdog-defaults/otterdog-defaults.libsonnet';
 
+local default_review_rule = {
+  # dismiss approved reviews automatically when a new commit is pushed
+  dismisses_stale_reviews: true,
+
+  # The number of approvals required before a pull request can be merged [0,10]
+  required_approving_review_count: 1,
+
+  # require an approved review in pull requests including files with a designated code owner
+  requires_code_owner_review: true,
+
+  # TODO: the most recent push must be approved by someone other than the person who pushed it
+  # requires_last_push_approval: true,
+};
+
+local main_branch_protection_rule = orgs.newBranchProtectionRule('main') {
+  # Enforce branch is up-to-date before merging
+  requires_status_checks: true,
+  requires_strict_status_checks: true,
+  # Restrict merge commits
+  requires_linear_history: true,
+  # Match the default_review_rule, otherwise it is overwritten with 2
+  required_approving_review_count: 1,
+};
+
 orgs.newOrg('automotive.sdv-landscape', 'eclipse-sdv-landscape') {
   settings+: {
     description: "",    
@@ -31,20 +55,6 @@ orgs.newOrg('automotive.sdv-landscape', 'eclipse-sdv-landscape') {
       workflows+: {
         enabled: true,
       },
-      branches+: {
-        main: {
-          protection+: {
-            required_pull_request_reviews: {
-              required_approving_review_count: 1,
-            },
-            enforce_admins: true,
-            required_status_checks: {
-              strict: true,
-              contexts: [],
-            },
-          },
-        },
-      },
     },
     orgs.newRepo('the-automotive-collection') {
       description: "Collection of automotive-related resources and projects",
@@ -60,20 +70,6 @@ orgs.newOrg('automotive.sdv-landscape', 'eclipse-sdv-landscape') {
       delete_branch_on_merge: true,
       workflows+: {
         enabled: true,
-      },
-      branches+: {
-        main: {
-          protection+: {
-            required_pull_request_reviews: {
-              required_approving_review_count: 1,
-            },
-            enforce_admins: true,
-            required_status_checks: {
-              strict: true,
-              contexts: [],
-            },
-          },
-        },
       },
     },
   ],
