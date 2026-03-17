@@ -31,6 +31,20 @@ orgs.newOrg('automotive.sdv-landscape', 'eclipse-sdv-landscape') {
       workflows+: {
         enabled: true,
       },
+      branches+: {
+        main: {
+          protection+: {
+            required_pull_request_reviews: {
+              required_approving_review_count: 1,
+            },
+            enforce_admins: true,
+            required_status_checks: {
+              strict: true,
+              contexts: [],
+            },
+          },
+        },
+      },
     },
     orgs.newRepo('the-automotive-collection') {
       description: "Collection of automotive-related resources and projects",
@@ -46,6 +60,20 @@ orgs.newOrg('automotive.sdv-landscape', 'eclipse-sdv-landscape') {
       delete_branch_on_merge: true,
       workflows+: {
         enabled: true,
+      },
+      branches+: {
+        main: {
+          protection+: {
+            required_pull_request_reviews: {
+              required_approving_review_count: 1,
+            },
+            enforce_admins: true,
+            required_status_checks: {
+              strict: true,
+              contexts: [],
+            },
+          },
+        },
       },
     },
   ],
