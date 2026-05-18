@@ -86,6 +86,35 @@ orgs.newOrg('automotive.sdv-landscape', 'eclipse-sdv-landscape') {
       ],
     },
 
+    newSdvRepo('sdv-dictionary') {
+      description: "SDV Dictionary",
+      homepage: "https://eclipse.dev/sdv-landscape/",
+      topics+: [
+        "sdv",
+        "software-defined-vehicle",
+        "eclipse",
+        "automotive",
+        "dictionary",
+      ],
+      has_issues: true,
+      has_projects: false,
+
+      branch_protection_rules: [
+        main_branch_protection_rule,
+      ],
+
+      rulesets: [
+        orgs.newRepoRuleset('main') {
+          include_refs+: [
+            "refs/heads/main",
+          ],
+          required_pull_request+: default_review_rule,
+          allows_force_pushes: false,
+          requires_linear_history: true,
+        },
+      ],
+    },
+
     newSdvRepo('the-automotive-collection') {
       description: "Collection of automotive-related resources and projects",
       has_issues: true,
