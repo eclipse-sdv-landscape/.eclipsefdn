@@ -47,6 +47,7 @@ orgs.newOrg('automotive.sdv-landscape', 'eclipse-sdv-landscape') {
   settings+: {
     description: "",
     name: "SDV-Landscape",
+    blog: "https://eclipse-sdv-landscape.github.io/sdv-landscape/",
     workflows+: {
       actions_can_approve_pull_request_reviews: false,
     },
